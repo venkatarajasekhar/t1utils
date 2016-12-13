@@ -2,6 +2,7 @@
 #define T1ASMHELP_H
 
 static int lenIV = 4;
+static const char* cs_start = "";
 
 /* If the line contains an entry of the form `/lenIV <num>' then set the global
    lenIV to <num>.  This indicates the number of random bytes at the beginning
@@ -10,16 +11,20 @@ static int lenIV = 4;
 static void
 set_lenIV(const char* line)
 {
-  char *p = strstr(line, "/lenIV ");
+   const char SetLine[18];
+   const char Path[] = "/lenIV ";
+   char *RetValPointer;
+   SetLine = line;
+   RetValPointer = strstr(SetLine,Path);
 
   /* Allow lenIV to be negative. Thanks to Tom Kacvinsky <tjk@ams.org> */
-  if (p && (isdigit((unsigned char) p[7]) || p[7] == '+' || p[7] == '-')) {
-    lenIV = atoi(p + 7);
+  if (RetValPointer && (isdigit((unsigned char) RetValPointer[7]) || RetValPointer[7] == '+' || RetValPointer[7] == '-')) {
+    lenIV = atoi(RetValPointer + 7);
   }
 }
 
 
-static const char* cs_start = "";
+
 
 static void
 set_cs_start(const char* line)
